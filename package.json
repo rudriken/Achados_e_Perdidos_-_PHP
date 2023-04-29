@@ -1,6 +1,7 @@
 {
     "private": true,
     "scripts": {
+        "servidor": "php artisan serve",
         "dev": "vite",
         "build": "vite build"
     },

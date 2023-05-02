@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth_Controller;
 use App\Http\Controllers\Cadastro_Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,8 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware("auth:sanctum")->get("/user", function (Request $request) {
     return $request->user();
+});
+
+Route::group([
+    "middleware" => "api",
+    "prefix" => "auth"
+], function ($router) {
+    Route::post("login", [Auth_Controller::class, "login"])->name("auth-login");
+    Route::post("logout", [Auth_Controller::class, "logout"])->name("auth-logout");
+    Route::post("refresh", [Auth_Controller::class, "refresh"])->name("auth-refresh");
+    Route::post("me", [Auth_Controller::class, "me"])->name("auth-me");
 });
 
 Route::post("/locais", [Cadastro_Controller::class, "cadastra"])

@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
             if ($e instanceof ValidationException) {
                 return response()->json([
                     "HTTP" => 400,
-                    "codigo" => "validação_erro",
+                    "codigo" => "validation_error",
                     "mensagem" => "Erro de validação dos dados enviados",
                 ] + $e->errors(), 400);
             }

@@ -41,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    static public function procurarUsuario(int $id): User
+    {
+        return self::find($id);
+    }
 }

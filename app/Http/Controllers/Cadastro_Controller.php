@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Cadastrar_Action;
 use App\Http\Requests\Cadastro_Request;
-use Illuminate\Http\Request;
+use App\Http\Resources\Cadastro_Resource;
 
 class Cadastro_Controller extends Controller
 {
@@ -19,6 +19,6 @@ class Cadastro_Controller extends Controller
     {
         $usuario = (array) $corpo->usuario;
         $local = (array) $corpo->except(["usuario"]);
-        return $this->cadastrar->executar($usuario, $local);
+        return new Cadastro_Resource($this->cadastrar->executar($usuario, $local));
     }
 }

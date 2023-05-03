@@ -26,9 +26,14 @@ Route::group(
         Route::post("login", [Auth_Controller::class, "login"])->name("auth-login");
         Route::post("refresh", [Auth_Controller::class, "refresh"])->name("auth-refresh");
         Route::post("logout", [Auth_Controller::class, "logout"])->name("auth-logout");
-        // Route::post("me", [Auth_Controller::class, "me"])->name("auth-me");
     }
 );
 
 Route::post("/locais", [Cadastro_Controller::class, "cadastra"])
     ->name("cadastra");
+
+
+// Route::get("/locais", [Cadastro_Controller::class, "show"])
+//     ->middleware("auth:api")
+//     ->name("mostrar.local");
+

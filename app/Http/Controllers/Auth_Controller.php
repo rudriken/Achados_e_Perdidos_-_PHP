@@ -19,7 +19,7 @@ class Auth_Controller extends Controller
     }
 
     /**
-     * Get a JWT via given credentials.
+     * Obtém um JWT por meio das credenciais fornecidas.
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -35,7 +35,7 @@ class Auth_Controller extends Controller
     }
 
     /**
-     * Refresh a token.
+     * Atualiza o token.
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -45,7 +45,7 @@ class Auth_Controller extends Controller
     }
 
     /**
-     * Log the user out (Invalidate the token).
+     * Efetua logout do usuário (invalida o token).
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -55,18 +55,18 @@ class Auth_Controller extends Controller
         return response()->json(['message' => 'Logout realizado com sucesso']);
     }
 
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function me()
-    {
-        return response()->json(Auth::user());
-    }
+    // /**
+    //  * Get the authenticated User.
+    //  *
+    //  * @return \Illuminate\Http\JsonResponse
+    //  */
+    // public function me()
+    // {
+    //     return response()->json(Auth::user());
+    // }
 
     /**
-     * Get the token array structure.
+     * Obtém a estrutura de matriz do token.
      *
      * @param  string $token
      *

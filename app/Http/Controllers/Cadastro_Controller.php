@@ -27,4 +27,9 @@ class Cadastro_Controller extends Controller
         $local = (array) $corpo->except(["usuario"]);
         return new Cadastro_Resource($this->cadastrar->executar($usuario, $local));
     }
+
+    public function imagem()
+    {
+        dd("cheguei em imagem");
+    }
 }

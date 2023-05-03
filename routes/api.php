@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth_Controller;
 use App\Http\Controllers\Cadastro_Controller;
+use App\Http\Controllers\Local_Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,7 +34,10 @@ Route::post("/locais", [Cadastro_Controller::class, "cadastra"])
     ->name("cadastra");
 
 
-// Route::get("/locais", [Cadastro_Controller::class, "show"])
-//     ->middleware("auth:api")
-//     ->name("mostrar.local");
+Route::get("/locais", [Local_Controller::class, "show"])
+    ->middleware("auth:api")
+    ->name("mostrar.local");
 
+Route::post("/locais/imagem", [Cadastro_Controller::class, "imagem"])
+    ->middleware("auth:api")
+    ->name("cadastrar.imagem");

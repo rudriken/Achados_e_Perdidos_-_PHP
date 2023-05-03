@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -74,7 +75,13 @@ class Handler extends ExceptionHandler
                     "codigo" => "token_invalido",
                     "mensagem" => "A assinatura do token não pôde ser verificada",
                 ], 401);
+            }
+            if ($erro instanceof AuthenticationException) {
+                return response()->json([
+                    "message" => "Unauthenticated"
+                ], 401);
             } else {
+                dd($erro);
                 return response()->json([
                     "HTTP" => 500,
                     "codigo" => "erro_interno",

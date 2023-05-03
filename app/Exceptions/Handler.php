@@ -74,6 +74,12 @@ class Handler extends ExceptionHandler
                     "codigo" => "token_invalido",
                     "mensagem" => "A assinatura do token não pôde ser verificada",
                 ], 401);
+            } else {
+                return response()->json([
+                    "HTTP" => 500,
+                    "codigo" => "erro_interno",
+                    "mensagem" => "Erro não catalogado",
+                ], 500);
             }
         }
         return parent::render($request, $erro);

@@ -25,7 +25,7 @@ Route::group(
     function () {
         Route::post("login", [Auth_Controller::class, "login"])->name("auth-login");
         Route::post("refresh", [Auth_Controller::class, "refresh"])->name("auth-refresh");
-        // Route::post("logout", [Auth_Controller::class, "logout"])->name("auth-logout");
+        Route::post("logout", [Auth_Controller::class, "logout"])->name("auth-logout");
         // Route::post("me", [Auth_Controller::class, "me"])->name("auth-me");
     }
 );

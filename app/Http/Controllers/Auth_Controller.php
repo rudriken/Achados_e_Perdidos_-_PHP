@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthLogin_Request;
-use Illuminate\Http\Request;
 
 class Auth_Controller extends Controller
 {
@@ -16,7 +15,7 @@ class Auth_Controller extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', "refresh"]]);
     }
 
     /**
@@ -32,7 +31,17 @@ class Auth_Controller extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        return $this->respondWithToken($token);
+        return $this->responderComToken($token);
+    }
+
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return $this->responderComToken(Auth::refresh());
     }
 
     /**
@@ -58,23 +67,13 @@ class Auth_Controller extends Controller
     }
 
     /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
-    {
-        return $this->respondWithToken(Auth::refresh());
-    }
-
-    /**
      * Get the token array structure.
      *
      * @param  string $token
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondWithToken($token)
+    protected function responderComToken($token)
     {
         return response()->json([
             'access' => $token,

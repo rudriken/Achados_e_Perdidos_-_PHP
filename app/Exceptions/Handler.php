@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Throwable;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class Handler extends ExceptionHandler
 {
@@ -49,17 +51,31 @@ class Handler extends ExceptionHandler
         });
     }
 
-    public function render($request, Throwable $e)
+    public function render($request, Throwable $erro)
     {
         if ($request->is("api/*")) {
-            if ($e instanceof ValidationException) {
+            if ($erro instanceof ValidationException) {
                 return response()->json([
                     "HTTP" => 400,
                     "codigo" => "validation_error",
                     "mensagem" => "Erro de validação dos dados enviados",
-                ] + $e->errors(), 400);
+                ] + $erro->errors(), 400);
+            }
+            if ($erro instanceof TokenBlacklistedException) {
+                return response()->json([
+                    "HTTP" => 401,
+                    "codigo" => "token_usado",
+                    "mensagem" => "O token foi colocado na lista negra",
+                ], 401);
+            }
+            if ($erro instanceof TokenInvalidException) {
+                return response()->json([
+                    "HTTP" => 401,
+                    "codigo" => "token_invalido",
+                    "mensagem" => "A assinatura do token não pôde ser verificada",
+                ], 401);
             }
         }
-        return parent::render($request, $e);
+        return parent::render($request, $erro);
     }
 }

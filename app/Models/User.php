@@ -68,8 +68,8 @@ class User extends Authenticatable implements JWTSubject
 		return [];
 	}
 
-    public function local()
+    public function possuiUmLocal()
     {
-        return $this->hasMany(Local::class, "user_id");
+        return $this->hasOne(Local::class, "user_id");
     }
 }

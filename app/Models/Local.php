@@ -14,4 +14,14 @@ class Local extends Model
     protected $fillable = [
         "nome", "endereco", "contato", "descricao", "imagem_local", "user_id"
     ];
+
+    public function pertenceAUmUsuario()
+    {
+        return $this->hasOne(User::class);
+    }
+
+    public function possuiVariosObjetos()
+    {
+        return $this->hasMany(Objeto::class);
+    }
 }

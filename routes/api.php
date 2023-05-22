@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth_Controller;
 use App\Http\Controllers\Cadastro_Controller;
 use App\Http\Controllers\Local_Controller;
+use App\Http\Controllers\Objeto_Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware("auth:sanctum")->get("/user", function (Request $request) {
+/* Route::middleware("auth:sanctum")->get("/user", function (Request $request) {
     return $request->user();
-});
+}); */
 
 Route::group(
     ["prefix" => "auth"],
@@ -31,7 +32,7 @@ Route::group(
 );
 
 Route::post("/locais", [Cadastro_Controller::class, "cadastra"])
-    ->name("cadastra");
+    ->name("cadastrar.local");
 
 
 Route::get("/locais", [Local_Controller::class, "show"])
@@ -41,3 +42,11 @@ Route::get("/locais", [Local_Controller::class, "show"])
 Route::post("/locais/imagem", [Cadastro_Controller::class, "imagem"])
     ->middleware("auth:api")
     ->name("cadastrar.imagem");
+
+Route::get("/objetos", [Objeto_Controller::class, "index"])
+    ->middleware("auth:api")
+    ->name("listar.objetos");
+
+Route::post("/objetos", [Objeto_Controller::class, "store"])
+    ->middleware("auth:api")
+    ->name("cadastrar.objeto");

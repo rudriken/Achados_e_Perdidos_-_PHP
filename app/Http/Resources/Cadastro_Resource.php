@@ -6,7 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class Cadastro_Resource extends JsonResource
 {
-    public static $wrap = "";
+    // public static $wrap = "";
 
     /**
      * Transform the resource into an array.

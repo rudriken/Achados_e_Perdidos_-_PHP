@@ -3,17 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Actions\ObjetoCadastrar_Action;
+use App\Actions\ObjetosListar_Action;
 use App\Http\Requests\Objeto_Request;
 use App\Http\Resources\Objeto_Resource;
+use App\Http\Resources\Objeto_ResourceCollection;
 use Illuminate\Http\Request;
 
 class Objeto_Controller extends Controller
 {
     private ObjetoCadastrar_Action $cadastrar;
+    private ObjetosListar_Action $listar;
 
-    public function __construct(ObjetoCadastrar_Action $acao)
-    {
-        $this->cadastrar = $acao;
+    public function __construct(
+        ObjetoCadastrar_Action $acao1,
+        ObjetosListar_Action $acao2
+    ) {
+        $this->cadastrar = $acao1;
+        $this->listar = $acao2;
     }
 
     /**
@@ -23,7 +29,7 @@ class Objeto_Controller extends Controller
      */
     public function index()
     {
-        dd("cheguei no Controller 'Objeto_Controller'");
+        return new Objeto_ResourceCollection($this->listar->executar());
     }
 
     /**

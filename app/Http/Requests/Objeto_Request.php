@@ -23,6 +23,11 @@ class Objeto_Request extends FormRequest
      */
     public function rules()
     {
+        if ($this->getContentType() === "form") {
+            return [
+                "imagem_objeto" => ["required", "image"],
+            ];
+        }
         return [
             "nome"      => ["required", "min:3", "max:255"],
             "descricao" => ["required", "min:3", "max:255"],

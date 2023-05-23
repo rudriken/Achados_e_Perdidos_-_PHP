@@ -3,10 +3,12 @@
 namespace App\Exceptions;
 
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class Handler extends ExceptionHandler
@@ -78,7 +80,17 @@ class Handler extends ExceptionHandler
             }
             if ($erro instanceof AuthenticationException) {
                 return response()->json([
-                    "message" => "Unauthenticated"
+                    "message" => "Token inválido!"
+                ], 401);
+            }
+            if ($erro instanceof ModelNotFoundException) {
+                return response()->json([
+                    "message" => "Objeto não encontrado"
+                ], 404);
+            }
+            if ($erro instanceof TokenExpiredException) {
+                return response()->json([
+                    "message" => "Token expirado!"
                 ], 401);
             } else {
                 dd($erro);

@@ -4,7 +4,6 @@ use App\Http\Controllers\Auth_Controller;
 use App\Http\Controllers\Cadastro_Controller;
 use App\Http\Controllers\Local_Controller;
 use App\Http\Controllers\Objeto_Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,3 +49,7 @@ Route::get("/objetos", [Objeto_Controller::class, "index"])
 Route::post("/objetos", [Objeto_Controller::class, "store"])
     ->middleware("auth:api")
     ->name("cadastrar.objeto");
+
+Route::post("/objetos/{objetoId}/imagem", [Objeto_Controller::class, "store"])
+    ->middleware("auth:api")
+    ->name("cadastrar.imagem.objeto");

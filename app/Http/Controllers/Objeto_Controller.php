@@ -3,23 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Actions\ObjetoCadastrar_Action;
+use App\Actions\ObjetoImagemCadastrar_Action;
 use App\Actions\ObjetosListar_Action;
 use App\Http\Requests\Objeto_Request;
 use App\Http\Resources\Objeto_Resource;
 use App\Http\Resources\Objeto_ResourceCollection;
+use App\Models\Objeto;
 use Illuminate\Http\Request;
 
 class Objeto_Controller extends Controller
 {
     private ObjetoCadastrar_Action $cadastrar;
     private ObjetosListar_Action $listar;
+    private ObjetoImagemCadastrar_Action $imagemCadastrar;
 
     public function __construct(
         ObjetoCadastrar_Action $acao1,
-        ObjetosListar_Action $acao2
+        ObjetosListar_Action $acao2,
+        ObjetoImagemCadastrar_Action $acao3
     ) {
+        $this->middleware('auth:api');
         $this->cadastrar = $acao1;
         $this->listar = $acao2;
+        $this->imagemCadastrar = $acao3;
     }
 
     /**
@@ -48,8 +54,14 @@ class Objeto_Controller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Objeto_Request $request)
+    public function store(Objeto_Request $request, Objeto $objetoId)
     {
+        if ($request->imagem_objeto) {
+            $this->imagemCadastrar->executar($request->imagem_objeto, $objetoId);
+            return response()->json([
+                "message" => "Imagem definida com sucesso!"
+            ]);
+        }
         return new Objeto_Resource($this->cadastrar->executar($request->all()));
     }
 

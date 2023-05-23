@@ -28,7 +28,7 @@ class Auth_Controller extends Controller
         $credentials = $dados->only(["email", "password"]);
 
         if (!$token = Auth::attempt($credentials)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Não tem autorização!'], 401);
         }
 
         return $this->responderComToken($token);

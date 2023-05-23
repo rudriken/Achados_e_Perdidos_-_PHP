@@ -9,7 +9,7 @@ class Objeto extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["nome", "descricao", "entregue", "local_id"];
+    protected $fillable = ["nome", "descricao", "entregue", "local_id", "imagem_objeto"];
 
     public function pertenceAUmLocal()
     {

@@ -57,3 +57,8 @@ Route::post("/objetos/{objetoId}/imagem", [Objeto_Controller::class, "update"])
 Route::get("/objetos/{objetoId}", [Objeto_Controller::class, "show"])
     ->middleware("auth:api")
     ->name("exibir.objeto");
+
+Route::put("/objetos/{objetoId}", [Objeto_Controller::class, "update"])
+    ->middleware("auth:api")
+    ->name("alterar.objeto");
+

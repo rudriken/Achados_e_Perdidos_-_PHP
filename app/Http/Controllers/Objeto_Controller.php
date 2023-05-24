@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\ObjetoAlterar_Action;
 use App\Actions\ObjetoCadastrar_Action;
 use App\Actions\ObjetoExibir_Action;
 use App\Actions\ObjetoImagemCadastrar_Action;
@@ -10,7 +11,7 @@ use App\Http\Requests\Objeto_Request;
 use App\Http\Resources\Objeto_Resource;
 use App\Http\Resources\Objeto_ResourceCollection;
 use App\Models\Objeto;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class Objeto_Controller extends Controller
 {
@@ -18,18 +19,21 @@ class Objeto_Controller extends Controller
     private ObjetosListar_Action $listar;
     private ObjetoImagemCadastrar_Action $imagemCadastrar;
     private ObjetoExibir_Action $exibirObjeto;
+    private ObjetoAlterar_Action $alterarObjeto;
 
     public function __construct(
         ObjetoCadastrar_Action $acao1,
         ObjetosListar_Action $acao2,
         ObjetoImagemCadastrar_Action $acao3,
-        ObjetoExibir_Action $acao4
+        ObjetoExibir_Action $acao4,
+        ObjetoAlterar_Action $acao5
     ) {
-        $this->middleware('auth:api');
+        // $this->middleware('auth:api');
         $this->cadastrar = $acao1;
         $this->listar = $acao2;
         $this->imagemCadastrar = $acao3;
         $this->exibirObjeto = $acao4;
+        $this->alterarObjeto = $acao5;
     }
 
     /**
@@ -94,11 +98,11 @@ class Objeto_Controller extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Objeto_Request $request
+     * @param Objeto $objetoId
+     * @return JsonResponse|Objeto_Resource
      */
-    public function update(Objeto_Request $request, Objeto $objetoId)
+    public function update(Objeto_Request $request, Objeto $objetoId): JsonResponse|Objeto_Resource
     {
         if ($request->imagem_objeto) {
             $this->imagemCadastrar->executar($request->imagem_objeto, $objetoId);
@@ -106,6 +110,16 @@ class Objeto_Controller extends Controller
                 "message" => "Imagem definida com sucesso!"
             ]);
         }
+        $resposta = $this->alterarObjeto->executar(
+            $request->all(),
+            $objetoId->getAttributes()
+        );
+        if ($resposta) {
+            return new Objeto_Resource($resposta);
+        }
+        return response()->json([
+            "message" => "Objeto não encontrado para este usuário"
+        ], 404);
     }
 
     /**

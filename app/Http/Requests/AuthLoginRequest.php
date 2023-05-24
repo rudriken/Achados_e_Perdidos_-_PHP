@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Objeto_Request extends FormRequest
+class AuthLoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,14 +23,9 @@ class Objeto_Request extends FormRequest
      */
     public function rules()
     {
-        if ($this->getContentType() === "form") {
-            return [
-                "imagem_objeto" => ["required", "image"],
-            ];
-        }
         return [
-            "nome"      => ["required", "min:3", "max:255"],
-            "descricao" => ["required", "min:3", "max:255"],
+            "email" => ["required", "min:3", "max:255", "email"],
+            "password" => ["required"]
         ];
     }
 }

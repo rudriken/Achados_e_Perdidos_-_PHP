@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\LocalCadastrar_Action;
-use App\Http\Requests\Cadastro_Request;
-use App\Http\Requests\Imagem_Request;
-use App\Http\Resources\Cadastro_Resource;
+use App\Actions\LocalCadastrarAction;
+use App\Http\Requests\CadastroRequest;
+use App\Http\Requests\ImagemRequest;
+use App\Http\Resources\CadastroResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class Cadastro_Controller extends Controller
+class CadastroController extends Controller
 {
-    private LocalCadastrar_Action $cadastrar;
+    private LocalCadastrarAction $cadastrar;
 
-    public function __construct(LocalCadastrar_Action $acao1)
+    public function __construct(LocalCadastrarAction $acao1)
     {
         $this->cadastrar = $acao1;
     }
@@ -22,16 +22,16 @@ class Cadastro_Controller extends Controller
      * Cadastra o usuário e o local no banco de dados
      *
      * @param Cadastro_Request $corpo
-     * @return Cadastro_Resource
+     * @return CadastroResource
      */
-    public function cadastra(Cadastro_Request $corpo): Cadastro_Resource
+    public function cadastra(CadastroRequest $corpo): CadastroResource
     {
         $usuario = (array) $corpo->usuario;
         $local = (array) $corpo->except(["usuario"]);
-        return new Cadastro_Resource($this->cadastrar->executar($usuario, $local));
+        return new CadastroResource($this->cadastrar->executar($usuario, $local));
     }
 
-    public function imagem(Imagem_Request $dados)
+    public function imagem(ImagemRequest $dados)
     {
         $user = Auth::user();
         $usuario = new User();

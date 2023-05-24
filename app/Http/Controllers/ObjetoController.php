@@ -4,33 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Models\Objeto;
 use Illuminate\Http\JsonResponse;
-use App\Actions\ObjetoExibir_Action;
-use App\Actions\ObjetoAlterar_Action;
-use App\Actions\ObjetoDeletar_Action;
-use App\Actions\ObjetosListar_Action;
-use App\Http\Requests\Objeto_Request;
-use App\Actions\ObjetoCadastrar_Action;
-use App\Http\Resources\Objeto_Resource;
-use App\Actions\ObjetoImagemCadastrar_Action;
-use App\Http\Resources\Objeto_ResourceCollection;
+use App\Actions\ObjetoExibirAction;
+use App\Actions\ObjetoAlterarAction;
+use App\Actions\ObjetoDeletarAction;
+use App\Actions\ObjetosListarAction;
+use App\Http\Requests\ObjetoRequest;
+use App\Actions\ObjetoCadastrarAction;
+use App\Http\Resources\ObjetoResource;
+use App\Actions\ObjetoImagemCadastrarAction;
+use App\Http\Resources\ObjetoResourceCollection;
 
 
-class Objeto_Controller extends Controller
+class ObjetoController extends Controller
 {
-    private ObjetoCadastrar_Action $cadastrar;
-    private ObjetosListar_Action $listar;
-    private ObjetoImagemCadastrar_Action $imagemCadastrar;
-    private ObjetoExibir_Action $exibirObjeto;
-    private ObjetoAlterar_Action $alterarObjeto;
-    private ObjetoDeletar_Action $deletarObjeto;
+    private ObjetoCadastrarAction $cadastrar;
+    private ObjetosListarAction $listar;
+    private ObjetoImagemCadastrarAction $imagemCadastrar;
+    private ObjetoExibirAction $exibirObjeto;
+    private ObjetoAlterarAction $alterarObjeto;
+    private ObjetoDeletarAction $deletarObjeto;
 
     public function __construct(
-        ObjetoCadastrar_Action $acao1,
-        ObjetosListar_Action $acao2,
-        ObjetoImagemCadastrar_Action $acao3,
-        ObjetoExibir_Action $acao4,
-        ObjetoAlterar_Action $acao5,
-        ObjetoDeletar_Action $acao6
+        ObjetoCadastrarAction $acao1,
+        ObjetosListarAction $acao2,
+        ObjetoImagemCadastrarAction $acao3,
+        ObjetoExibirAction $acao4,
+        ObjetoAlterarAction $acao5,
+        ObjetoDeletarAction $acao6
     ) {
         // $this->middleware('auth:api');
         $this->cadastrar = $acao1;
@@ -44,11 +44,12 @@ class Objeto_Controller extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Objeto_ResourceCollection
+     * @return ObjetoResourceCollection|array
      */
-    public function index(): Objeto_ResourceCollection
+    public function index(): ObjetoResourceCollection|array
     {
-        return new Objeto_ResourceCollection($this->listar->executar());
+        $resposta = $this->listar->executar();
+        return new ObjetoResourceCollection($resposta);
     }
 
     /**
@@ -65,24 +66,24 @@ class Objeto_Controller extends Controller
      * Store a newly created resource in storage.
      *
      * @param Objeto_Request $request
-     * @return Objeto_Resource
+     * @return ObjetoResource
      */
-    public function store(Objeto_Request $request): Objeto_Resource
+    public function store(ObjetoRequest $request): ObjetoResource
     {
-        return new Objeto_Resource($this->cadastrar->executar($request->all()));
+        return new ObjetoResource($this->cadastrar->executar($request->all()));
     }
 
     /**
      * Display the specified resource.
      *
      * @param Objeto $objetoId
-     * @return Objeto_Resource|JsonResponse
+     * @return ObjetoResource|JsonResponse
      */
-    public function show(Objeto $objetoId): Objeto_Resource|JsonResponse
+    public function show(Objeto $objetoId): ObjetoResource|JsonResponse
     {
         $resposta = $this->exibirObjeto->executar($objetoId->getAttributes());
         if ($resposta) {
-            return new Objeto_Resource($objetoId);
+            return new ObjetoResource($objetoId);
         }
         return response()->json([
             "message" => "Objeto não encontrado para este usuário"
@@ -105,22 +106,27 @@ class Objeto_Controller extends Controller
      *
      * @param Objeto_Request $request
      * @param Objeto $objetoId
-     * @return JsonResponse|Objeto_Resource
+     * @return JsonResponse|ObjetoResource
      */
-    public function update(Objeto_Request $request, Objeto $objetoId): JsonResponse|Objeto_Resource
+    public function update(ObjetoRequest $request, Objeto $objetoId): JsonResponse|ObjetoResource
     {
         if ($request->imagem_objeto) {
-            $this->imagemCadastrar->executar($request->imagem_objeto, $objetoId);
+            $resposta = $this->imagemCadastrar->executar($request->imagem_objeto, $objetoId);
+            if ($resposta) {
+                return response()->json([
+                    "message" => "Imagem definida com sucesso!"
+                ]);
+            }
             return response()->json([
-                "message" => "Imagem definida com sucesso!"
-            ]);
+                "message" => "Objeto não encontrado para este usuário"
+            ], 404);
         }
         $resposta = $this->alterarObjeto->executar(
             $request->all(),
             $objetoId->getAttributes()
         );
         if ($resposta) {
-            return new Objeto_Resource($resposta);
+            return new ObjetoResource($resposta);
         }
         return response()->json([
             "message" => "Objeto não encontrado para este usuário"

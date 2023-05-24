@@ -5,7 +5,7 @@ namespace App\Actions;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class UsuarioCadastrar_Action {
+class UsuarioCadastrarAction {
 
     /**
      * Cadastra o usuário no banco de dados e retorna o ID desse usuário

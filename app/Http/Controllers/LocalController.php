@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Cadastro_Resource;
+use App\Http\Resources\CadastroResource;
 use Illuminate\Support\Facades\Auth;
 
-class Local_Controller extends Controller
+class LocalController extends Controller
 {
     public function show()
     {
         $local = Auth::user()->possuiUmLocal;
-        return new Cadastro_Resource($local);
+        return new CadastroResource($local);
     }
 }

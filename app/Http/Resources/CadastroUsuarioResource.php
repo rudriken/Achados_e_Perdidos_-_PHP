@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CadastroUsuario_Resource extends JsonResource
+class CadastroUsuarioResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

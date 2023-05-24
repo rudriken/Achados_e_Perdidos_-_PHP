@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Objeto_Resource extends JsonResource
+class ObjetoResource extends JsonResource
 {
     // static public $wrap = "";
 

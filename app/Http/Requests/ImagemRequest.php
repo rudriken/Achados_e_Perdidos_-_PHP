@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthLogin_Request extends FormRequest
+class ImagemRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class AuthLogin_Request extends FormRequest
     public function rules()
     {
         return [
-            "email" => ["required", "min:3", "max:255", "email"],
-            "password" => ["required"]
+            "imagem_local" => ["required", "image"]
         ];
     }
 }

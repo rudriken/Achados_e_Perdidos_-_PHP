@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Auth_Controller;
-use App\Http\Controllers\Cadastro_Controller;
-use App\Http\Controllers\Local_Controller;
-use App\Http\Controllers\Objeto_Controller;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CadastroController;
+use App\Http\Controllers\LocalController;
+use App\Http\Controllers\ObjetoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,44 +24,44 @@ use Illuminate\Support\Facades\Route;
 Route::group(
     ["prefix" => "auth"],
     function () {
-        Route::post("login", [Auth_Controller::class, "login"])->name("auth-login");
-        Route::post("refresh", [Auth_Controller::class, "refresh"])->name("auth-refresh");
-        Route::post("logout", [Auth_Controller::class, "logout"])->name("auth-logout");
+        Route::post("login", [AuthController::class, "login"])->name("auth-login");
+        Route::post("refresh", [AuthController::class, "refresh"])->name("auth-refresh");
+        Route::post("logout", [AuthController::class, "logout"])->name("auth-logout");
     }
 );
 
-Route::post("/locais", [Cadastro_Controller::class, "cadastra"])
+Route::post("/locais", [CadastroController::class, "cadastra"])
     ->name("cadastrar.local");
 
 
-Route::get("/locais", [Local_Controller::class, "show"])
+Route::get("/locais", [LocalController::class, "show"])
     ->middleware("auth:api")
     ->name("mostrar.local");
 
-Route::post("/locais/imagem", [Cadastro_Controller::class, "imagem"])
+Route::post("/locais/imagem", [CadastroController::class, "imagem"])
     ->middleware("auth:api")
     ->name("cadastrar.imagem");
 
-Route::get("/objetos", [Objeto_Controller::class, "index"])
+Route::get("/objetos", [ObjetoController::class, "index"])
     ->middleware("auth:api")
     ->name("listar.objetos");
 
-Route::post("/objetos", [Objeto_Controller::class, "store"])
+Route::post("/objetos", [ObjetoController::class, "store"])
     ->middleware("auth:api")
     ->name("cadastrar.objeto");
 
-Route::post("/objetos/{objetoId}/imagem", [Objeto_Controller::class, "update"])
+Route::post("/objetos/{objetoId}/imagem", [ObjetoController::class, "update"])
     ->middleware("auth:api")
     ->name("cadastrar.imagem.objeto");
 
-Route::get("/objetos/{objetoId}", [Objeto_Controller::class, "show"])
+Route::get("/objetos/{objetoId}", [ObjetoController::class, "show"])
     ->middleware("auth:api")
     ->name("exibir.objeto");
 
-Route::put("/objetos/{objetoId}", [Objeto_Controller::class, "update"])
+Route::put("/objetos/{objetoId}", [ObjetoController::class, "update"])
     ->middleware("auth:api")
     ->name("alterar.objeto");
 
-Route::delete("/objetos/{objetoId}", [Objeto_Controller::class, "destroy"])
+Route::delete("/objetos/{objetoId}", [ObjetoController::class, "destroy"])
     ->middleware("auth:api")
     ->name("deletar.objeto");

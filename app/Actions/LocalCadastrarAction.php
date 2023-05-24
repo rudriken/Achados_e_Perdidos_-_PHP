@@ -4,11 +4,11 @@ namespace App\Actions;
 
 use App\Models\Local;
 
-class LocalCadastrar_Action {
+class LocalCadastrarAction {
 
-    private UsuarioCadastrar_Action $usuarioCadastrar;
+    private UsuarioCadastrarAction $usuarioCadastrar;
 
-    public function __construct(UsuarioCadastrar_Action $acao)
+    public function __construct(UsuarioCadastrarAction $acao)
     {
         $this->usuarioCadastrar = $acao;
     }

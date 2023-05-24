@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Cadastro_Resource extends JsonResource
+class CadastroResource extends JsonResource
 {
     // public static $wrap = "";
 
@@ -56,7 +56,7 @@ class Cadastro_Resource extends JsonResource
             "contato"   => $this->getAttributes()["contato"],
             "descricao" => $this->getAttributes()["descricao"],
             "imagem"    => $this->getAttributes()["imagem_local"],
-            "usuario"   => new CadastroUsuario_Resource($this),
+            "usuario"   => new CadastroUsuarioResource($this),
             "links"     => $links
         ];
     }

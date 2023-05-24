@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AuthLogin_Request;
+use App\Http\Requests\AuthLoginRequest;
 
-class Auth_Controller extends Controller
+class AuthController extends Controller
 {
     /**
      * Create a new AuthController instance.
@@ -23,7 +23,7 @@ class Auth_Controller extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(AuthLogin_Request $dados)
+    public function login(AuthLoginRequest $dados)
     {
         $credentials = $dados->only(["email", "password"]);
 

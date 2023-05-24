@@ -53,3 +53,7 @@ Route::post("/objetos", [Objeto_Controller::class, "store"])
 Route::post("/objetos/{objetoId}/imagem", [Objeto_Controller::class, "update"])
     ->middleware("auth:api")
     ->name("cadastrar.imagem.objeto");
+
+Route::get("/objetos/{objetoId}", [Objeto_Controller::class, "show"])
+    ->middleware("auth:api")
+    ->name("exibir.objeto");

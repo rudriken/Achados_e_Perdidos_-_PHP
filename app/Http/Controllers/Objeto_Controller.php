@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\ObjetoCadastrar_Action;
+use App\Actions\ObjetoExibir_Action;
 use App\Actions\ObjetoImagemCadastrar_Action;
 use App\Actions\ObjetosListar_Action;
 use App\Http\Requests\Objeto_Request;
@@ -16,16 +17,19 @@ class Objeto_Controller extends Controller
     private ObjetoCadastrar_Action $cadastrar;
     private ObjetosListar_Action $listar;
     private ObjetoImagemCadastrar_Action $imagemCadastrar;
+    private ObjetoExibir_Action $exibirObjeto;
 
     public function __construct(
         ObjetoCadastrar_Action $acao1,
         ObjetosListar_Action $acao2,
-        ObjetoImagemCadastrar_Action $acao3
+        ObjetoImagemCadastrar_Action $acao3,
+        ObjetoExibir_Action $acao4
     ) {
         $this->middleware('auth:api');
         $this->cadastrar = $acao1;
         $this->listar = $acao2;
         $this->imagemCadastrar = $acao3;
+        $this->exibirObjeto = $acao4;
     }
 
     /**
@@ -65,9 +69,15 @@ class Objeto_Controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Objeto $objetoId)
     {
-        //
+        $resposta = $this->exibirObjeto->executar($objetoId->getAttributes());
+        if ($resposta) {
+            return new Objeto_Resource($objetoId);
+        }
+        return response()->json([
+            "message" => "Objeto não encontrado para este usuário"
+        ], 404);
     }
 
     /**

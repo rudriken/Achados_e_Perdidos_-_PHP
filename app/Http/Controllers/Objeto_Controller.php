@@ -54,14 +54,8 @@ class Objeto_Controller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Objeto_Request $request, Objeto $objetoId)
+    public function store(Objeto_Request $request)
     {
-        if ($request->imagem_objeto) {
-            $this->imagemCadastrar->executar($request->imagem_objeto, $objetoId);
-            return response()->json([
-                "message" => "Imagem definida com sucesso!"
-            ]);
-        }
         return new Objeto_Resource($this->cadastrar->executar($request->all()));
     }
 
@@ -94,9 +88,14 @@ class Objeto_Controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Objeto_Request $request, Objeto $objetoId)
     {
-        //
+        if ($request->imagem_objeto) {
+            $this->imagemCadastrar->executar($request->imagem_objeto, $objetoId);
+            return response()->json([
+                "message" => "Imagem definida com sucesso!"
+            ]);
+        }
     }
 
     /**

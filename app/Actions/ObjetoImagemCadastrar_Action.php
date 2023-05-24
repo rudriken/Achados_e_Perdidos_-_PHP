@@ -7,7 +7,14 @@ use Illuminate\Http\UploadedFile;
 
 class ObjetoImagemCadastrar_Action
 {
-    public function executar(UploadedFile $imagem, Objeto $objeto)
+    /**
+     * Define uma imagem para um objeto já cadastrado
+     *
+     * @param UploadedFile $imagem
+     * @param Objeto $objeto
+     * @return Objeto
+     */
+    public function executar(UploadedFile $imagem, Objeto $objeto): Objeto
     {
         $objeto->imagem_objeto = $imagem->store("public");
         return Objeto::updateOrCreate(

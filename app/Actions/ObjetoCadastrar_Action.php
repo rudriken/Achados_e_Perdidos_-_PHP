@@ -2,14 +2,18 @@
 
 namespace App\Actions;
 
-use App\Http\Requests\Objeto_Request;
 use App\Models\Objeto;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class ObjetoCadastrar_Action
 {
-    public function executar(array $dados)
+    /**
+     * Cadastra o novo objeto no banco de dados
+     *
+     * @param array $dados
+     * @return Objeto
+     */
+    public function executar(array $dados): Objeto
     {
         $usuario = Auth::user();
         $local = $usuario->possuiUmLocal;

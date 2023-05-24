@@ -6,7 +6,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ObjetoExibir_Action
 {
-    public function executar(array $objetoId)
+    /**
+     * Verifica o usuário logado e exibe ou não o objeto pedido
+     *
+     * @param array $objetoId
+     * @return array|false
+     */
+    public function executar(array $objetoId): array|false
     {
         $usuario = Auth::user();
         $objetos = $usuario->possuiUmLocal->possuiNObjetos;

@@ -62,3 +62,6 @@ Route::put("/objetos/{objetoId}", [Objeto_Controller::class, "update"])
     ->middleware("auth:api")
     ->name("alterar.objeto");
 
+Route::delete("/objetos/{objetoId}", [Objeto_Controller::class, "destroy"])
+    ->middleware("auth:api")
+    ->name("deletar.objeto");

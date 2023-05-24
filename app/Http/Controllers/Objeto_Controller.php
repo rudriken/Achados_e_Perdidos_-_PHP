@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\ObjetoAlterar_Action;
-use App\Actions\ObjetoCadastrar_Action;
-use App\Actions\ObjetoExibir_Action;
-use App\Actions\ObjetoImagemCadastrar_Action;
-use App\Actions\ObjetosListar_Action;
-use App\Http\Requests\Objeto_Request;
-use App\Http\Resources\Objeto_Resource;
-use App\Http\Resources\Objeto_ResourceCollection;
 use App\Models\Objeto;
 use Illuminate\Http\JsonResponse;
+use App\Actions\ObjetoExibir_Action;
+use App\Actions\ObjetoAlterar_Action;
+use App\Actions\ObjetoDeletar_Action;
+use App\Actions\ObjetosListar_Action;
+use App\Http\Requests\Objeto_Request;
+use App\Actions\ObjetoCadastrar_Action;
+use App\Http\Resources\Objeto_Resource;
+use App\Actions\ObjetoImagemCadastrar_Action;
+use App\Http\Resources\Objeto_ResourceCollection;
+
 
 class Objeto_Controller extends Controller
 {
@@ -20,13 +22,15 @@ class Objeto_Controller extends Controller
     private ObjetoImagemCadastrar_Action $imagemCadastrar;
     private ObjetoExibir_Action $exibirObjeto;
     private ObjetoAlterar_Action $alterarObjeto;
+    private ObjetoDeletar_Action $deletarObjeto;
 
     public function __construct(
         ObjetoCadastrar_Action $acao1,
         ObjetosListar_Action $acao2,
         ObjetoImagemCadastrar_Action $acao3,
         ObjetoExibir_Action $acao4,
-        ObjetoAlterar_Action $acao5
+        ObjetoAlterar_Action $acao5,
+        ObjetoDeletar_Action $acao6
     ) {
         // $this->middleware('auth:api');
         $this->cadastrar = $acao1;
@@ -34,14 +38,15 @@ class Objeto_Controller extends Controller
         $this->imagemCadastrar = $acao3;
         $this->exibirObjeto = $acao4;
         $this->alterarObjeto = $acao5;
+        $this->deletarObjeto = $acao6;
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Objeto_ResourceCollection
      */
-    public function index()
+    public function index(): Objeto_ResourceCollection
     {
         return new Objeto_ResourceCollection($this->listar->executar());
     }
@@ -59,10 +64,10 @@ class Objeto_Controller extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Objeto_Request $request
+     * @return Objeto_Resource
      */
-    public function store(Objeto_Request $request)
+    public function store(Objeto_Request $request): Objeto_Resource
     {
         return new Objeto_Resource($this->cadastrar->executar($request->all()));
     }
@@ -70,10 +75,10 @@ class Objeto_Controller extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Objeto $objetoId
+     * @return Objeto_Resource|JsonResponse
      */
-    public function show(Objeto $objetoId)
+    public function show(Objeto $objetoId): Objeto_Resource|JsonResponse
     {
         $resposta = $this->exibirObjeto->executar($objetoId->getAttributes());
         if ($resposta) {
@@ -128,8 +133,14 @@ class Objeto_Controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Objeto $objetoId)
     {
-        //
+        $resposta = $this->deletarObjeto->executar($objetoId->getAttributes());
+        if ($resposta) {
+            return response()->json([], 204);
+        }
+        return response()->json([
+            "message" => "Objeto não encontrado para este usuário"
+        ], 404);
     }
 }

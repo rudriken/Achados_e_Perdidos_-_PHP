@@ -49,13 +49,23 @@ class CadastroResource extends JsonResource
             ]
         ];
 
+        $existeChaveImagemLocal = false;
+        foreach ($this->getAttributes() as $chave => $valor) {
+            if ($chave === "imagem_local") {
+                $existeChaveImagemLocal = true;
+                break;
+            }
+        }
+
         return [
             "id"        => $this->getAttributes()["id"],
             "nome"      => $this->getAttributes()["nome"],
             "endereco"  => $this->getAttributes()["endereco"],
             "contato"   => $this->getAttributes()["contato"],
             "descricao" => $this->getAttributes()["descricao"],
-            "imagem"    => $this->getAttributes()["imagem_local"],
+            "imagem"    => $existeChaveImagemLocal
+                ? $this->getAttributes()["imagem_local"]
+                : null,
             "usuario"   => new CadastroUsuarioResource($this),
             "links"     => $links
         ];

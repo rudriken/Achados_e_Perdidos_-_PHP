@@ -25,7 +25,7 @@ class CadastroController extends Controller
      * @param Cadastro_Request $corpo
      * @return CadastroResource
      */
-    public function cadastra(CadastroRequest $corpo): CadastroResource
+    public function cadastrar(CadastroRequest $corpo): CadastroResource
     {
         $usuario = (array) $corpo->usuario;
         $local = (array) $corpo->except(["usuario"]);

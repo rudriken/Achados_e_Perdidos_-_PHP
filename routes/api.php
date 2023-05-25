@@ -56,5 +56,5 @@ Route::group(["middleware" => "auth:api"], function () {
         ->name("deletar.objeto");
 });
 
-Route::post("/locais", [CadastroController::class, "cadastra"])
+Route::post("/locais", [CadastroController::class, "cadastrar"])
     ->name("cadastrar.local");

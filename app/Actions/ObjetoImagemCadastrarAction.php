@@ -27,7 +27,7 @@ class ObjetoImagemCadastrarAction
             }
         }
         if ($objetoEDoUsuario) {
-            $objetoDados->imagem_objeto = $imagem->store("public");
+            $objetoDados->imagem_objeto = $imagem->store("public/objetos");
             return Objeto::updateOrCreate(
                 ["id" => $objetoDados->id],
                 $objetoDados->getAttributes()

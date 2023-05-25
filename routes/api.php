@@ -30,38 +30,31 @@ Route::group(
     }
 );
 
+Route::group(["middleware" => "auth:api"], function () {
+    Route::get("/locais", [LocalController::class, "show"])
+        ->name("mostrar.local");
+
+    Route::post("/locais/imagem", [CadastroController::class, "cadastraImagem"])
+        ->name("cadastrar.imagem.local");
+
+    Route::get("/objetos", [ObjetoController::class, "index"])
+        ->name("listar.objetos");
+
+    Route::post("/objetos", [ObjetoController::class, "store"])
+        ->name("cadastrar.objeto");
+
+    Route::post("/objetos/{objetoId}/imagem", [ObjetoController::class, "update"])
+        ->name("cadastrar.imagem.objeto");
+
+    Route::get("/objetos/{objetoId}", [ObjetoController::class, "show"])
+        ->name("exibir.objeto");
+
+    Route::put("/objetos/{objetoId}", [ObjetoController::class, "update"])
+        ->name("alterar.objeto");
+
+    Route::delete("/objetos/{objetoId}", [ObjetoController::class, "destroy"])
+        ->name("deletar.objeto");
+});
+
 Route::post("/locais", [CadastroController::class, "cadastra"])
     ->name("cadastrar.local");
-
-
-Route::get("/locais", [LocalController::class, "show"])
-    ->middleware("auth:api")
-    ->name("mostrar.local");
-
-Route::post("/locais/imagem", [CadastroController::class, "imagem"])
-    ->middleware("auth:api")
-    ->name("cadastrar.imagem");
-
-Route::get("/objetos", [ObjetoController::class, "index"])
-    ->middleware("auth:api")
-    ->name("listar.objetos");
-
-Route::post("/objetos", [ObjetoController::class, "store"])
-    ->middleware("auth:api")
-    ->name("cadastrar.objeto");
-
-Route::post("/objetos/{objetoId}/imagem", [ObjetoController::class, "update"])
-    ->middleware("auth:api")
-    ->name("cadastrar.imagem.objeto");
-
-Route::get("/objetos/{objetoId}", [ObjetoController::class, "show"])
-    ->middleware("auth:api")
-    ->name("exibir.objeto");
-
-Route::put("/objetos/{objetoId}", [ObjetoController::class, "update"])
-    ->middleware("auth:api")
-    ->name("alterar.objeto");
-
-Route::delete("/objetos/{objetoId}", [ObjetoController::class, "destroy"])
-    ->middleware("auth:api")
-    ->name("deletar.objeto");

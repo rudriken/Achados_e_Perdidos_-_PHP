@@ -50,7 +50,7 @@ class ObjetoResource extends JsonResource
             "descricao"     => $this->descricao,
             "entregue"      => $this->entregue,
             "data_cadastro" => substr($this->created_at, 0, 10),
-            "imagem"        => $this->imagem_objeto,
+            "imagem"        => config("app.url") . $this->imagem_objeto,
             "links"         => $links
         ];
     }

@@ -64,7 +64,7 @@ class CadastroResource extends JsonResource
             "contato"   => $this->getAttributes()["contato"],
             "descricao" => $this->getAttributes()["descricao"],
             "imagem"    => $existeChaveImagemLocal
-                ? $this->getAttributes()["imagem_local"]
+                ? config("app.url") . $this->getAttributes()["imagem_local"]
                 : null,
             "usuario"   => new CadastroUsuarioResource($this),
             "links"     => $links

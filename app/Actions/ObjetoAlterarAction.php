@@ -5,7 +5,8 @@ namespace App\Actions;
 use App\Models\Objeto;
 use Illuminate\Support\Facades\Auth;
 
-class ObjetoAlterarAction {
+class ObjetoAlterarAction
+{
 
     /**
      * Faz a alteração de nome e/ou descrição de um objeto

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -43,32 +44,43 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Retorna o usuário.
+     *
+     * @param integer $id
+     * @return User
+     */
     static public function procurarUsuario(int $id): User
     {
         return self::find($id);
     }
 
-	/**
-	 * Get the identifier that will be stored in the subject claim of the JWT.
-	 *
-	 * @return mixed
-	 */
-	public function getJWTIdentifier()
-	{
-		return $this->getKey();
-	}
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
 
-	/**
-	 * Return a key value array, containing any custom claims to be added to the JWT.
-	 *
-	 * @return array
-	 */
-	public function getJWTCustomClaims()
-	{
-		return [];
-	}
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
-    public function possuiUmLocal()
+    /**
+     * Retorna o local cadastrado pelo usuário logado
+     *
+     * @return HasOne
+     */
+    public function possuiUmLocal(): HasOne
     {
         return $this->hasOne(Local::class, "user_id");
     }

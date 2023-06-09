@@ -65,7 +65,7 @@ class ObjetoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Objeto_Request $request
+     * @param ObjetoRequest $request
      * @return ObjetoResource
      */
     public function store(ObjetoRequest $request): ObjetoResource
@@ -104,7 +104,7 @@ class ObjetoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Objeto_Request $request
+     * @param ObjetoRequest $request
      * @param Objeto $objetoId
      * @return JsonResponse|ObjetoResource
      */
@@ -136,10 +136,10 @@ class ObjetoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Objeto $objetoId
+     * @return JsonResponse
      */
-    public function destroy(Objeto $objetoId)
+    public function destroy(Objeto $objetoId): JsonResponse
     {
         $resposta = $this->deletarObjeto->executar($objetoId->getAttributes());
         if ($resposta) {

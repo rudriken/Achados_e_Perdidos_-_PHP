@@ -6,9 +6,8 @@ use App\Actions\LocalCadastrarAction;
 use App\Http\Requests\CadastroRequest;
 use App\Http\Requests\ImagemRequest;
 use App\Http\Resources\CadastroResource;
-use App\Models\User;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 
 class CadastroController extends Controller
 {
@@ -32,7 +31,13 @@ class CadastroController extends Controller
         return new CadastroResource($this->cadastrar->executar($usuario, $local));
     }
 
-    public function cadastraImagem(ImagemRequest $dados)
+    /**
+     * Faz a gravação do caminho da imagem no banco de dados
+     *
+     * @param ImagemRequest $dados
+     * @return JsonResponse
+     */
+    public function cadastraImagem(ImagemRequest $dados): JsonResponse
     {
         $usuario = Auth::user();
         $local = $usuario->possuiUmLocal;

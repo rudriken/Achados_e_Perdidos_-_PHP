@@ -12,7 +12,7 @@ class ObjetoImagemCadastrarAction
      * Define uma imagem para um objeto já cadastrado
      *
      * @param UploadedFile $imagem
-     * @param Objeto $objeto
+     * @param Objeto $objetoDados
      * @return Objeto|false
      */
     public function executar(UploadedFile $imagem, Objeto $objetoDados): Objeto|false

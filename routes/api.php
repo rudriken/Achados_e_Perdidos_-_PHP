@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BuscaLocaisController;
+use App\Http\Controllers\BuscaObjetosController;
 use App\Http\Controllers\CadastroController;
 use App\Http\Controllers\LocalController;
 use App\Http\Controllers\ObjetoController;
@@ -61,3 +62,5 @@ Route::post("/locais", [CadastroController::class, "cadastrar"])
     ->name("cadastrar.local");
 Route::get("/locais/busca", BuscaLocaisController::class)
     ->name("buscar.locais");
+Route::get("/locais/{localId}/objetos", BuscaObjetosController::class)
+    ->name("buscar.objetos");

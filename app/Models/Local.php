@@ -4,24 +4,36 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Local extends Model
 {
-	use HasFactory;
+    use HasFactory;
 
-	protected $table = "locais";
+    protected $table = "locais";
 
-	protected $fillable = [
-		"nome", "endereco", "contato", "descricao", "imagem_local", "user_id"
-	];
+    protected $fillable = [
+        "nome", "endereco", "contato", "descricao", "imagem_local", "user_id"
+    ];
 
-	public function pertenceAUmUsuario()
-	{
-		return $this->hasOne(User::class);
-	}
+    /**
+     * Retorna o local cadastrado pelo usuário logado
+     *
+     * @return HasOne
+     */
+    public function pertenceAUmUsuario(): HasOne
+    {
+        return $this->hasOne(User::class);
+    }
 
-	public function possuiNObjetos()
-	{
-		return $this->hasMany(Objeto::class);
-	}
+    /**
+     * Retorna os objetos cadastraoos para um local
+     *
+     * @return HasMany
+     */
+    public function possuiNObjetos(): HasMany
+    {
+        return $this->hasMany(Objeto::class);
+    }
 }

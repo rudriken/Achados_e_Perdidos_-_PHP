@@ -12,11 +12,17 @@ class BuscarObjetosAction
      * Faz uma busca dos objetos de um local
      *
      * @param Local $local
-     * @return Collection
+     * @return array<Collection>
      */
-    public function executar(Local $local): Collection
+    public function executar(Local $local): array
     {
         $objetos = $local->possuiNObjetos;
-        return $objetos;
+        $objetosDisponiveis = [];
+        foreach ($objetos as $objeto) {
+            if (!$objeto->entregue) {
+                $objetosDisponiveis = array_merge($objetosDisponiveis, [$objeto]);
+            }
+        }
+        return $objetosDisponiveis;
     }
 }

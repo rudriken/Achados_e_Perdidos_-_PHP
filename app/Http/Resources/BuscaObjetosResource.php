@@ -19,7 +19,7 @@ class BuscaObjetosResource extends JsonResource
             "nome"          => $this->nome,
             "descricao"     => $this->descricao,
             "entregue"      => $this->entregue,
-            "data_cadatro"  => substr($this->created_at, 0, 10),
+            "data_cadastro"  => substr($this->created_at, 0, 10),
             "imagem"        => config("app.url") . $this->imagem_objeto,
         ];
     }

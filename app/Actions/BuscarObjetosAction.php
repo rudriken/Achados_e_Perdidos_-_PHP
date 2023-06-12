@@ -17,12 +17,12 @@ class BuscarObjetosAction
     public function executar(Local $local): array
     {
         $objetos = $local->possuiNObjetos;
-        $objetosDisponiveis = [];
+        $objetosNaoEntregues = [];
         foreach ($objetos as $objeto) {
             if (!$objeto->entregue) {
-                $objetosDisponiveis = array_merge($objetosDisponiveis, [$objeto]);
+                $objetosNaoEntregues = array_merge($objetosNaoEntregues, [$objeto]);
             }
         }
-        return $objetosDisponiveis;
+        return $objetosNaoEntregues;
     }
 }

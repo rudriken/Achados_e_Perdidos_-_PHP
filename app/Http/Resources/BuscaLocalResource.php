@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Hateoas\Index as HateoasIndex;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BuscaLocalResource extends JsonResource
@@ -14,14 +15,13 @@ class BuscaLocalResource extends JsonResource
      */
     public function toArray($request)
     {
-        $links = [
-            [
-                "type" => "GET",
-                "rel" => "objetos_local",
-                "uri" => "/api/locais/$this->id/objetos"
-            ],
-        ];
-
+        // $links = [
+        //     [
+        //         "type" => "GET",
+        //         "rel" => "objetos_local",
+        //         "uri" => "/api/locais/$this->id/objetos"
+        //     ],
+        // ];
         return [
             "id"        => $this->id,
             "nome"      => $this->nome,
@@ -29,7 +29,7 @@ class BuscaLocalResource extends JsonResource
             "contato"   => $this->contato,
             "descricao" => $this->descricao,
             "imagem"    => config("app.url") . $this->imagem_local,
-            "links"     => $links,
+            "links"     => (new HateoasIndex)->links($this->resource),
         ];
     }
 }

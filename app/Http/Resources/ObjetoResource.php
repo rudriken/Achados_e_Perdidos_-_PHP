@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Hateoas\Objeto as HateoasObjeto;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ObjetoResource extends JsonResource
@@ -16,33 +17,33 @@ class ObjetoResource extends JsonResource
      */
     public function toArray($request)
     {
-        $links = [
-            [
-                "type"  => "GET",
-                "rel"   => "self",
-                "uri"   => "/api/objetos/$this->id"
-            ],
-            [
-                "type"  => "PUT",
-                "rel"   => "atualizar_objeto",
-                "uri"   => "/api/objetos/$this->id"
-            ],
-            [
-                "type"  => "DELETE",
-                "rel"   => "apagar_objeto",
-                "uri"   => "/api/objetos/$this->id"
-            ],
-            [
-                "type"  => "POST",
-                "rel"   => "definir_imagem_objeto",
-                "uri"   => "/api/objetos/$this->id/imagem"
-            ],
-            [
-                "type"  => "PATCH",
-                "rel"   => "definir_dono_objeto",
-                "uri"   => "/api/objetos/$this->id/donos"
-            ]
-        ];
+        // $links = [
+        //     [
+        //         "type"  => "GET",
+        //         "rel"   => "self",
+        //         "uri"   => "/api/objetos/$this->id"
+        //     ],
+        //     [
+        //         "type"  => "PUT",
+        //         "rel"   => "atualizar_objeto",
+        //         "uri"   => "/api/objetos/$this->id"
+        //     ],
+        //     [
+        //         "type"  => "DELETE",
+        //         "rel"   => "apagar_objeto",
+        //         "uri"   => "/api/objetos/$this->id"
+        //     ],
+        //     [
+        //         "type"  => "POST",
+        //         "rel"   => "definir_imagem_objeto",
+        //         "uri"   => "/api/objetos/$this->id/imagem"
+        //     ],
+        //     [
+        //         "type"  => "PATCH",
+        //         "rel"   => "definir_dono_objeto",
+        //         "uri"   => "/api/objetos/$this->id/donos"
+        //     ]
+        // ];
 
         return [
             "id"            => $this->id,
@@ -51,7 +52,7 @@ class ObjetoResource extends JsonResource
             "entregue"      => $this->entregue,
             "data_cadastro" => substr($this->created_at, 0, 10),
             "imagem"        => config("app.url") . $this->imagem_objeto,
-            "links"         => $links
+            "links"         => (new HateoasObjeto)->links($this->resource)
         ];
     }
 }

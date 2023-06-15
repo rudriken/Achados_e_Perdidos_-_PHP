@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use ErrorException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -92,8 +93,12 @@ class Handler extends ExceptionHandler
                 return response()->json([
                     "message" => "Token expirado!"
                 ], 401);
+            }
+            if ($erro instanceof ErrorException) {
+                return response()->json([
+                    "message" => $erro->getMessage() . ". " . $erro->getFile() . ". " . $erro->getLine()
+                ], 500);
             } else {
-                dd($erro);
                 return response()->json([
                     "HTTP" => 500,
                     "codigo" => "erro_interno",

@@ -4,24 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Actions\LocalAtualizarAction;
 use App\Actions\LocalCadastrarAction;
+use App\Actions\LocalExcluirAction;
 use App\Http\Requests\AtualizaRequest;
 use App\Http\Requests\CadastroRequest;
 use App\Http\Requests\ImagemRequest;
 use App\Http\Resources\CadastroResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Js;
 
 class CadastroController extends Controller
 {
     private LocalCadastrarAction $cadastrar;
     private LocalAtualizarAction $atualizar;
+    private LocalExcluirAction $excluir;
 
     public function __construct(
         LocalCadastrarAction $acao1,
-        LocalAtualizarAction $acao2
+        LocalAtualizarAction $acao2,
+        LocalExcluirAction $acao3
     ) {
         $this->cadastrar = $acao1;
         $this->atualizar = $acao2;
+        $this->excluir = $acao3;
     }
 
     /**
@@ -64,5 +69,13 @@ class CadastroController extends Controller
         $usuario = (array) $corpo->usuario;
         $local = (array) $corpo->except(["usuario"]);
         return new CadastroResource($this->atualizar->executar($usuario, $local));
+    }
+
+    function excluir()
+    {
+        $resposta = $this->excluir->executar();
+        if ($resposta) {
+            return response()->json([], 204);
+        }
     }
 }

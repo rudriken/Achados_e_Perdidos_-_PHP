@@ -58,9 +58,14 @@ Route::group(["middleware" => "auth:api"], function () {
     Route::delete("/objetos/{objetoId}", [ObjetoController::class, "destroy"])
         ->name("deletar.objeto");
 
-    Route::post("/objetos/{objetoId}/donos", InformeDonoController::class)->name("informar.dono");
+    Route::post("/objetos/{objetoId}/donos", InformeDonoController::class)
+        ->name("informar.dono");
 
-    Route::put("/locais", [CadastroController::class, "atualizar"])->name("alterar.local");
+    Route::put("/locais", [CadastroController::class, "atualizar"])
+        ->name("alterar.local");
+
+    Route::delete("/locais", [CadastroController::class, "excluir"])
+        ->name("apagar.local");
 });
 
 Route::post("/locais", [CadastroController::class, "cadastrar"])

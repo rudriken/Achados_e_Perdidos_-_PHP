@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BuscaLocaisController;
 use App\Http\Controllers\BuscaObjetosController;
 use App\Http\Controllers\CadastroController;
+use App\Http\Controllers\InformeDonoController;
 use App\Http\Controllers\LocalController;
 use App\Http\Controllers\ObjetoController;
 use Illuminate\Support\Facades\Route;
@@ -56,6 +57,8 @@ Route::group(["middleware" => "auth:api"], function () {
 
     Route::delete("/objetos/{objetoId}", [ObjetoController::class, "destroy"])
         ->name("deletar.objeto");
+
+    Route::post("/objetos/{objetoId}/donos", InformeDonoController::class)->name("informar.dono");
 });
 
 Route::post("/locais", [CadastroController::class, "cadastrar"])

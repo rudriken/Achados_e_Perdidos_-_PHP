@@ -32,6 +32,7 @@ return [
     ],
     'boolean'              => 'O campo :attribute deve ser verdadeiro ou falso.',
     'confirmed'            => 'O campo :attribute de confirmação não confere.',
+    'cpf'                  => 'O campo :attribute não recebeu um número válido de CPF',
     'current_password'     => 'A senha está incorreta.',
     'date'                 => 'O campo :attribute não é uma data válida.',
     'date_equals'          => 'O campo :attribute deve ser uma data igual a :date.',

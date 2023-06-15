@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CadastroRequest extends FormRequest
+class AtualizaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,10 +30,10 @@ class CadastroRequest extends FormRequest
             "descricao"                     => ["max:255"],
             "usuario.nome"                  => ["required", "min:3", "max:255"],
             "usuario.email"                 => [
-                "required", "min:3", "max:255", "email", "unique:users,email"
+                "required", "min:3", "max:255", "email",
             ],
-            "usuario.password"              => ["required", "confirmed"],
-            "usuario.password_confirmation" => ["required"]
+            "usuario.password"              => ["confirmed"],
+            "usuario.password_confirmation" => [],
         ];
     }
 }

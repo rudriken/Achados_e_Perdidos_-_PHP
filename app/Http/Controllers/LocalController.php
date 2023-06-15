@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CadastroResource;
+
 use Illuminate\Support\Facades\Auth;
 
 class LocalController extends Controller

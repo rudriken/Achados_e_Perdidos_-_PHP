@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\LocalAtualizarAction;
 use App\Actions\LocalCadastrarAction;
+use App\Http\Requests\AtualizaRequest;
 use App\Http\Requests\CadastroRequest;
 use App\Http\Requests\ImagemRequest;
 use App\Http\Resources\CadastroResource;
@@ -12,10 +14,14 @@ use Illuminate\Http\JsonResponse;
 class CadastroController extends Controller
 {
     private LocalCadastrarAction $cadastrar;
+    private LocalAtualizarAction $atualizar;
 
-    public function __construct(LocalCadastrarAction $acao1)
-    {
+    public function __construct(
+        LocalCadastrarAction $acao1,
+        LocalAtualizarAction $acao2
+    ) {
         $this->cadastrar = $acao1;
+        $this->atualizar = $acao2;
     }
 
     /**
@@ -51,5 +57,12 @@ class CadastroController extends Controller
         return response()->json([
             "message" => "Usuario não possui local cadastrado",
         ]);
+    }
+
+    public function atualizar(AtualizaRequest $corpo)
+    {
+        $usuario = (array) $corpo->usuario;
+        $local = (array) $corpo->except(["usuario"]);
+        return new CadastroResource($this->atualizar->executar($usuario, $local));
     }
 }

@@ -59,6 +59,8 @@ Route::group(["middleware" => "auth:api"], function () {
         ->name("deletar.objeto");
 
     Route::post("/objetos/{objetoId}/donos", InformeDonoController::class)->name("informar.dono");
+
+    Route::put("/locais", [CadastroController::class, "atualizar"])->name("alterar.local");
 });
 
 Route::post("/locais", [CadastroController::class, "cadastrar"])

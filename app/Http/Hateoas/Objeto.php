@@ -15,32 +15,38 @@ class Objeto extends HateoasBase implements HateoasInterface
             ["objetoId" => $objeto->id]
         );
         $this->adicionaLink(
-            "PUT",
-            "atualizar_objeto",
-            "alterar.objeto",
-            ["objetoId" => $objeto->id]
-        );
-        $this->adicionaLink(
             "DELETE",
             "apagar_objeto",
             "deletar.objeto",
             ["objetoId" => $objeto->id]
         );
-        $this->adicionaLink(
-            "POST",
-            "definir_imagem_objeto",
-            "cadastrar.imagem.objeto",
-            ["objetoId" => $objeto->id]
-        );
-        $this->adicionaLink(
-            "POST",
-            "definir_dono_objeto",
-            "informar.dono",
-            ["objetoId" => $objeto->id]
-        );
 
-
+        $this->linkInformarEntrega($objeto);
 
         return $this->links;
+    }
+
+    private function linkInformarEntrega(Model $objeto)
+    {
+        if (!$objeto->entregue) {
+            $this->adicionaLink(
+                "POST",
+                "definir_dono_objeto",
+                "informar.dono",
+                ["objetoId" => $objeto->id]
+            );
+            $this->adicionaLink(
+                "PUT",
+                "atualizar_objeto",
+                "alterar.objeto",
+                ["objetoId" => $objeto->id]
+            );
+            $this->adicionaLink(
+                "POST",
+                "definir_imagem_objeto",
+                "cadastrar.imagem.objeto",
+                ["objetoId" => $objeto->id]
+            );
+        }
     }
 }

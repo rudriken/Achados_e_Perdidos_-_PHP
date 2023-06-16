@@ -17,41 +17,9 @@ class CadastroResource extends JsonResource
      */
     public function toArray($request)
     {
-        // $links = [
-        //     [
-        //         "type" => "GET",
-        //         "rel" => "self",
-        //         "uri" => "/api/locais"
-        //     ],
-        //     [
-        //         "type" => "PUT",
-        //         "rel" => "atualizar_local",
-        //         "uri" => "/api/locais"
-        //     ],
-        //     [
-        //         "type" => "DELETE",
-        //         "rel" => "apagar_local",
-        //         "uri" => "/api/locais"
-        //     ],
-        //     [
-        //         "type" => "POST",
-        //         "rel" => "definir_imagem_local",
-        //         "uri" => "/api/locais/imagem"
-        //     ],
-        //     [
-        //         "type" => "GET",
-        //         "rel" => "listar_objetos_local",
-        //         "uri" => "/api/objetos"
-        //     ],
-        //     [
-        //         "type" => "POST",
-        //         "rel" => "adicionar_objeto_local",
-        //         "uri" => "/api/objetos"
-        //     ]
-        // ];
 
         $existeChaveImagemLocal = false;
-        foreach ($this->getAttributes() as $chave => $valor) {
+        foreach ($this->getAttributes() as $chave => $_valor) {
             if ($chave === "imagem_local") {
                 $existeChaveImagemLocal = true;
                 break;
@@ -59,13 +27,13 @@ class CadastroResource extends JsonResource
         }
 
         return [
-            "id"        => $this->getAttributes()["id"],
-            "nome"      => $this->getAttributes()["nome"],
-            "endereco"  => $this->getAttributes()["endereco"],
-            "contato"   => $this->getAttributes()["contato"],
-            "descricao" => $this->getAttributes()["descricao"],
+            "id"        => $this->id,
+            "nome"      => $this->nome,
+            "endereco"  => $this->endereco,
+            "contato"   => $this->contato,
+            "descricao" => $this->descricao,
             "imagem"    => $existeChaveImagemLocal
-                ? config("app.url") . $this->getAttributes()["imagem_local"]
+                ? ($this->imagem_local ? config("app.url") . $this->imagem_local : null)
                 : null,
             "usuario"   => new CadastroUsuarioResource($this),
             "links"     => (new HateoasLocal)->links($this->resource)

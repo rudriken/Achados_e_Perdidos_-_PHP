@@ -15,20 +15,14 @@ class BuscaLocalResource extends JsonResource
      */
     public function toArray($request)
     {
-        // $links = [
-        //     [
-        //         "type" => "GET",
-        //         "rel" => "objetos_local",
-        //         "uri" => "/api/locais/$this->id/objetos"
-        //     ],
-        // ];
         return [
             "id"        => $this->id,
             "nome"      => $this->nome,
             "endereco"  => $this->endereco,
             "contato"   => $this->contato,
             "descricao" => $this->descricao,
-            "imagem"    => config("app.url") . $this->imagem_local,
+            "imagem"    => $this->imagem_local ? (config("app.url") . $this->imagem_local
+            ) : null,
             "links"     => (new HateoasIndex)->links($this->resource),
         ];
     }
